@@ -1,0 +1,4 @@
+maria,-52,2026-06-12 16:31:21,Error: la edad debe ser numeros enteros
+,23,2026-06-12 16:31:38,Error: Nombre esta vacio
+felipe,148,2026-06-12 16:32:22,Error: Edad fuera de contexto, mayor de 120 años
+mauro,hgfhgfd,2026-06-12 16:32:46,Error: la edad debe ser numeros enteros

@@ -67,15 +67,16 @@ def buscar_usuario():
                 if not lineas:
                     print("\nNo hay usuarios registrados.\n")
                     return
-
+                print("\nBuscando Usuarios:")
+                ok = False
                 for fila in lineas:
                     nombre, edad, fecha = fila.strip().split(",")
-                    if nombre_a_buscar == nombre:
-                        print("\nUsuario encontrado:")
+                    encontrado = nombre.find(nombre_a_buscar)
+                    if encontrado!=-1:
                         print(f"Nombre: {nombre}| Edad: {edad}|Fecha: {fecha}")
-                        return
-                print("\nUsuario no enontrado.\n")
-
+                        ok = True
+                if ok==False:        
+                    print("\nUsuario no enontrado.\n")
 
         except FileNotFoundError:
             print("\nNo se encontro el archivo de usuarios.\n")
@@ -134,9 +135,9 @@ def crear_archivo_bueno(nombre, edad, fecha):
             linea = f"{nombre},{edad},{fecha}\n"
             file.write(linea)
 
-def crear_archivo_errores(nombre, edad, fecha):
+def crear_archivo_errores(nombre, edad, fecha, error):
      with open("archivo_con_errores.txt", "a", encoding="utf-8") as file:
-            linea = linea = f"{nombre},{edad},{fecha}\n"
+            linea = linea = f"{nombre},{edad},{fecha},{error}\n"
             file.write(linea)
 
 def crear_logs():
@@ -154,22 +155,22 @@ def crear_logs():
                     edad1 = variable[1]
                     fecha = variable[2]
                     if nombre == "":
-                        crear_archivo_errores(nombre,edad1,fecha)
+                        crear_archivo_errores(nombre,edad1,fecha,"Error: Nombre esta vacio")
                         ok = False
 
                     if not edad1.isdigit():
-                        crear_archivo_errores(nombre,edad1,fecha)
+                        crear_archivo_errores(nombre,edad1,fecha,"Error: la edad debe ser numeros enteros")
                         ok = False
                     else:
                         edad = int(variable[1])    
                         if edad == '':
-                            crear_archivo_errores(nombre,edad,fecha)
+                            crear_archivo_errores(nombre,edad,fecha,"Error: La edad esta vacia")
                             ok = False
                         elif edad < 0:
-                            crear_archivo_errores(nombre,edad,fecha)
+                            crear_archivo_errores(nombre,edad,fecha,"Error: la edad no puede ser negativa")
                             ok = False
                         elif edad > 120:
-                            crear_archivo_errores(nombre,edad,fecha)
+                            crear_archivo_errores(nombre,edad,fecha,"Error: Edad fuera de contexto, mayor de 120 años")
                             ok = False
                     if ok:
                         crear_archivo_bueno(nombre,edad,fecha)
